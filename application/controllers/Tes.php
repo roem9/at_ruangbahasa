@@ -207,8 +207,9 @@ class Tes extends MY_Controller {
         $tes = $this->tes->get_one("tes", ["id_tes" => $peserta['id_tes']]);
         $peserta['nama'] = $peserta['nama'];
         $peserta['t4_lahir'] = ucwords(strtolower($peserta['t4_lahir']));
+        $peserta['hari'] = date('d', strtotime($tes['tgl_tes']));
         $peserta['tahun'] = date('y', strtotime($tes['tgl_tes']));
-        $peserta['bulan'] = getRomawi(date('m', strtotime($tes['tgl_tes'])));
+        $peserta['bulan'] = date('m', strtotime($tes['tgl_tes']));
         $peserta['listening'] = poin("Listening", $peserta['nilai_listening']);
         $peserta['structure'] = poin("Structure", $peserta['nilai_structure']);
         $peserta['reading'] = poin("Reading", $peserta['nilai_reading']);
@@ -219,7 +220,7 @@ class Tes extends MY_Controller {
 
         $skor = round($skor);
         
-        $peserta['no_doc'] = "{$peserta['tahun']}/{$peserta['no_doc']}";
+        $peserta['no_doc'] = "{$peserta['tahun']}/{$peserta['bulan']}-{$peserta['hari']}-{$peserta['no_doc']}";
 
         $peserta['config'] = $this->tes->config();
         $peserta['id_tes'] = $peserta['id_tes'];
